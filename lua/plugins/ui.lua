@@ -65,7 +65,15 @@ require('lualine').setup({
       {
       'branch',
       on_click = function()
-        vim.cmd('Telescope git_branches')
+        -- get cwd for file in case neovim is not
+        -- at git path
+        -- :p - absolute path
+        -- :h remove file name and jsut keep dir
+        local cwd = vim.fn.expand('%:p:h')
+        print(cwd)
+        require('telescope.builtin').git_branches({
+          cwd = cwd
+        })
       end
     },
     {

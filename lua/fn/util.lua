@@ -26,7 +26,10 @@ fn.toggleIndents = function ()
   fn.setIndent(vim.g, indent, tabs)
   fn.setIndent(vim.opt, indent, tabs)
 
-  print("identing set:", (not tabs and (indent .. " spaces") or "tabs"))
+  vim.notify(
+    (not tabs and (indent .. " spaces") or "tabs") .. ' identation',
+    2
+  )
 end
 
 fn.toggleLineNumbering = function()
@@ -37,11 +40,59 @@ end
 
 fn.toggleHlSearch = function()
   vim.o.hlsearch = not vim.o.hlsearch
-  print("hl search: " .. vim.inspect(vim.o.hlsearch))
+  vim.notify('hl search: ' .. vim.inspect(vim.o.hlsearch))
 end
 
 fn.get_project_root = function()
   return vim.fn.getcwd()
 end
+
+fn.which = function(cmd)
+  return vim.fn.systemlist('PATH=/usr/bin:$PATH which ' .. cmd)[1]
+end
+
+fn.register_setting = function(s)
+  vim.api.nvim_exec_autocmds(
+    'User',
+    { pattern = 'RegisterSetting', data = s }
+  )
+end
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'SetupComplete',
+  callback = function()
+    FNS.util.register_setting({
+      type = 'select',
+      label = 'Indentation',
+      callback = function(indent, tabs)
+        fn.setIndent(vim.g, indent, tabs)
+        fn.setIndent(vim.o, indent, tabs)
+      end,
+      values = {
+        {
+          label = '2 spaces',
+          args = {
+            2,
+            false,
+          },
+        },
+        {
+          label = '4 spaces',
+          args = {
+            4,
+            false,
+          },
+        },
+        {
+          label = 'tabs',
+          args = {
+            4,
+            true,
+          },
+        },
+      }
+    })
+  end
+})
 
 return fn

@@ -2,6 +2,8 @@ require('base.globals')
 require('fn')
 require('base.setup')
 require('base.config')
+-- TODO: settings
+--require('base.settings')
 require('base.packages')
 
 require('mini.deps').later(

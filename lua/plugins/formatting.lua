@@ -1,8 +1,28 @@
 require('conform').setup({
   -- Map of filetype to formatters
   formatters_by_ft = {
-    javascript = { 'biome' },
-    json = { 'jq' },
+    javascript = {
+      'biome',
+      stop_after_first = true,
+      lsp_format = 'fallback',
+    },
+    typescript = {
+      'biome',
+      stop_after_first = true,
+      lsp_format = 'fallback',
+    },
+    json = {
+      'jq',
+      'biome',
+      stop_after_first = true,
+      lsp_format = 'fallback',
+    },
+    jsonc = {
+      'jq',
+      'biome',
+      stop_after_first = true,
+      lsp_format = 'fallback',
+    },
     lua = { 'stylua' },
   },
 
@@ -32,9 +52,9 @@ vim.api.nvim_create_user_command(
         },
       }
     end
-    require("conform").format({
+    require('conform').format({
       async = true,
-      lsp_format = "fallback",
+      lsp_format = 'fallback',
       range = range,
     })
   end,

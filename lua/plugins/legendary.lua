@@ -27,7 +27,6 @@ end
 local tLkmp = taggedLkmp('Telescope')
 
 
-
 legendary.setup({
   include_builtin = false,
   include_legendary_cmds = false,
@@ -142,7 +141,7 @@ legendary.setup({
     tLkmp('<leader>sg', '<cmd>Telescope egrepify<CR>',
       'Grep using egrepify'),
 
-		tLkmp('<leader>ff', tbuiltin.find_files,
+    tLkmp('<leader>ff', tbuiltin.find_files,
       'Find Files (Root Dir)'
     ),
 
@@ -161,6 +160,15 @@ legendary.setup({
         })
       end,
       'Legendary: Command & Functions palette'),
+
+    lkmp('<leader>lr', '<cmd>LegendaryRepeat<CR>',
+      'Legendary: repeat last action'),
+    lkmp('<space>r', '<cmd>LegendaryRepeat<CR>',
+      'Legendary: repeat last action'),
+
+    -- vessel
+    lkmp('gm', '<cmd>Marks<CR>', 'View marks'),
+    lkmp('gj', '<cmd>Jumps<CR>', 'View jumps'),
 
   },
   autocmds = {
@@ -193,16 +201,7 @@ legendary.setup({
   },
 
   commands = {
-    {
-      ':Foo',
-      function()
-        vim.notify('foo', 2)
-      end,
-      description = 'notify about foo'
-    },
-
     -- Workspaces
-
     {
       itemgroup = 'Workspaces',
       commands = {
@@ -275,6 +274,38 @@ legendary.setup({
         {
           ':Format',
           description = 'Format the code using conform',
+        },
+        {
+          ':FormatBiome',
+          function()
+            require('conform').format({ formatters = {'biome'} })
+          end,
+          description = 'Format the code using conform#biome',
+        },
+        {
+          ':FormatLsp',
+          function()
+            require('conform').format({
+              lsp_format = 'first',
+              formatters = {
+              },
+            })
+          end,
+          description = 'Format the code using conform#lsp',
+        },
+        {
+          ':FormatPreferLsp',
+          function()
+            require('conform').format({
+              lsp_format = 'first',
+            })
+          end,
+          description = 'Format the code using conform and prefer lsp',
+        },
+        {
+          ':FormatInfo',
+          function() vim.cmd('ConformInfo') end,
+          description = 'See info about attached formatters',
         },
         {
           ':TSJToggle',
@@ -414,5 +445,61 @@ legendary.setup({
       end,
       description = 'Enable this plugin',
     },
-  }
+
+    {
+      'BiomeToggle',
+      function()
+        vim.api.nvim_exec_autocmds(
+          'User',
+          { pattern = 'BiomeToggle' }
+        )
+      end,
+      description = 'Toggles biome linter/formatter',
+    },
+    {
+      'KubeCtl',
+      function()
+        require("kubectl").toggle()
+      end,
+      description = 'Toggles kubectl',
+    },
+    {
+      'KubeCtx',
+      description = 'Choose kubernetes instance',
+    },
+    {
+      itemgroup = 'Marks / jupms',
+      commands = {
+        {
+          'MarksDeleteAll',
+          function()
+            vim.cmd('delmarks A-Z0-9')
+            vim.cmd('delm!')
+          end,
+          description = 'Delete all marks',
+        },
+        {
+          'MarksDeleteGlobal',
+          function()
+            vim.cmd('delmarks A-Z0-9')
+          end,
+          description = 'Delete global marks',
+        },
+        {
+          'MarksDeleteLocal',
+          function()
+            vim.cmd('delm!')
+          end,
+          description = 'Delete local marks',
+        },
+        {
+          'JumpsDelete',
+          function()
+            vim.cmd('clear')
+          end,
+          description = 'Delete all jumps',
+        }
+      },
+    },
+  },
 })

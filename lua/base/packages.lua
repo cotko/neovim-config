@@ -101,7 +101,7 @@ now(function()
   })
   setupPlugin('treesitter.lua')
 
-  -- Install LSP/formatting/linter executables
+  -- Install LSP
 
   -- completion plugins
   add('ms-jpq/coq_nvim')
@@ -184,12 +184,6 @@ now(function()
   setupPlugin('lsp.lua')
 end)
 
-later(function()
-  add({
-	  source = 'mbbill/undotree',
-  })
-end)
-
 -- GIT
 later(function()
   add({
@@ -198,7 +192,19 @@ later(function()
   setupPlugin('gitsigns.lua')
 end)
 
--- file explorer
+later(function()
+  add({
+    source = 'NeogitOrg/neogit',
+    depends = {
+      'nvim-lua/plenary.nvim',
+      'sindrets/diffview.nvim',
+      'nvim-telescope/telescope.nvim',
+    },
+  })
+  require('neogit').setup({})
+end)
+
+-- File explorer
 later(function()
   add({
     source = 'nvim-tree/nvim-tree.lua',
@@ -207,6 +213,7 @@ later(function()
   setupPlugin('file_explorer.lua')
 end)
 
+-- Util
 later(function()
   add({
 	  source = 'echasnovski/mini.bufremove',
@@ -214,7 +221,25 @@ later(function()
   require('mini.bufremove').setup({})
 end)
 
--- expand/collapse (join/split) code blocks (also JSON etc)
+later(function()
+  add({
+	  source = 'mbbill/undotree',
+  })
+end)
+
+later(function()
+  add('gcmt/vessel.nvim')
+  require('vessel').setup({
+    create_commands = true,
+    commands = { -- not required unless you want to customize each command name
+    view_marks = 'Marks',
+    view_jumps = 'Jumps',
+    view_buffers = 'Buffers'
+    }
+})
+end)
+
+-- Expand/collapse (join/split) code blocks (also JSON etc)
 later(function()
   add('Wansmer/treesj')
   require('treesj').setup({
@@ -233,7 +258,6 @@ later(function()
   require('todo-comments').setup({})
 end)
 
-
 -- For lua development
 later(function()
   add({
@@ -242,26 +266,36 @@ later(function()
   require('lazydev').setup({})
 end)
 
--- For lua development
-later(function()
-  add('MeanderingProgrammer/render-markdown.nvim')
-  setupPlugin('markdown.lua')
-end)
-
+-- Formatting/linting
 later(function()
   add('stevearc/conform.nvim')
-  setupPlugin('conform.lua')
+  setupPlugin('formatting.lua')
 end)
 
+later(function()
+  add('mfussenegger/nvim-lint')
+  setupPlugin('linting.lua')
+end)
+
+-- UI
 later(function()
   add('nvim-lualine/lualine.nvim')
   setupPlugin('ui.lua')
 end)
 
+-- Special file types
+later(function()
+  add('MeanderingProgrammer/render-markdown.nvim')
+  require('render-markdown').setup({})
+end)
+
 later(function()
   local function build()
     vim.notify('Building asciidoc', vim.log.levels.INFO)
-    local obj = vim.system({ 'cd server && npm i' }, { cwd = params.path }):wait()
+    local obj = vim.system(
+      { 'cd server && npm i' },
+      { cwd = params.path }
+    ):wait()
 
     if obj.code == 0 then
       vim.notify('Building asciidoc done', vim.log.levels.INFO)
@@ -279,3 +313,17 @@ later(function()
   require('asciidoc-preview').setup({})
 end)
 
+-- 3rd party integrations
+later(function()
+  add('ramilito/kubectl.nvim')
+  require('kubectl').setup({})
+end)
+
+later(function()
+  --add('Exafunction/codeium.nvim')
+
+  add('monkoose/neocodeium')
+  local neocodeium = require('neocodeium')
+  neocodeium.setup()
+  vim.keymap.set('i', '<A-f>', neocodeium.accept)
+end)

@@ -1,15 +1,26 @@
 local legendary = require('legendary')
 local lsp = require('lspconfig')
-local has_typescript_tools, typescript_tools  = pcall(
-  require, 'typescript-tools')
+local has_typescript_tools  = pcall(require, 'typescript-tools')
 
-local lua_bin = vim.fn
-  .system('which lua-language-server')
-  :gsub("\n", "")
+local lua_bin = FNS.util.which('lua-language-server')
 
 if CompletionModule ~= 'coq' and CompletionModule ~= 'blink' then
   vim.notify('Completion module should be coq/blink', 3)
 end
+
+vim.diagnostic.config({
+  virtual_text = {
+    prefix = '●', -- Could be '■', '▎', 'x'
+  },
+  -- or Show virtual text only for errors
+  -- virtual_text = { severity = { min = 'ERROR', max = 'ERROR' } },
+	underline = true,
+	signs = true,
+  -- Don't update diagnostics when typing
+	update_in_insert = false,
+	severity_sort = true,
+  float = { border = 'double' },
+})
 
 local servers = {
   -- See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -21,6 +32,20 @@ local servers = {
   	--   return foo
   	--   --return '/mnt/klet/koda/gid/projects/apps-ul'
   	-- end,
+    init_options = {
+      reportFormattingDiagnostics = true,
+    },
+    settings = {
+      biome = {
+        -- Enable reporting of formatting issues as diagnostics
+        checkOnSave = {
+          enable = true,
+          command = 'check',
+        },
+      },
+    },
+    on_attach = function(client, bufnr)
+    end,
   },
   --eslint = {},
   gopls = {},
@@ -256,6 +281,7 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 require('mason').setup({
+  PATH = 'append',
   registries = {
     'github:nvim-java/mason-registry',
     'github:mason-org/mason-registry',
@@ -300,7 +326,7 @@ require('java').setup({
     'gradlew',
     'build.gradle',
     'build.gradle.kts',
-}
+  }
 })
 
 require('mason-lspconfig').setup({
@@ -330,7 +356,4 @@ require('mason-lspconfig').setup({
   },
 })
 
-
-
---setupJava()
 require('plugins.blink')

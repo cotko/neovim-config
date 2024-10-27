@@ -132,3 +132,7 @@ vim.api.nvim_create_autocmd('User', {
   pattern = 'WorkspacesLoaded',
   callback = setup
 })
+
+vim.api.nvim_create_autocmd('DirChanged', {
+  callback = setup
+})
