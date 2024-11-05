@@ -47,7 +47,7 @@ local function setup()
           -- for live greps
 
           local filename, lnum, col, text = string.match(
-            line, "([^:]+):(%d+):(%d+):(.*)")
+            line, '([^:]+):(%d+):(%d+):(.*)')
 
           local label = tUtils.transform_path(
             path_display_opt,
@@ -59,7 +59,7 @@ local function setup()
 
           local path_style = {{
             { 0, label_len },
-            "TelescopeResultsComment"
+            'TelescopeResultsComment'
           }}
 
           return {
@@ -84,12 +84,12 @@ local function setup()
         override_generic_sorter = true,
          -- override the file sorter
         override_file_sorter = true,
-        -- or "ignore_case" or "respect_case"
-        -- the default case_mode is "smart_case"
-        case_mode = "smart_case",
+        -- or 'ignore_case' or 'respect_case'
+        -- the default case_mode is 'smart_case'
+        case_mode = 'smart_case',
       },
-      ["ui-select"] = {
-        require("telescope.themes").get_dropdown({
+      ['ui-select'] = {
+        require('telescope.themes').get_dropdown({
 
         })
       },
@@ -101,12 +101,12 @@ local function setup()
           -- example prompt: ! sorter
           -- matches all lines that do not comprise sorter
           -- rg --invert-match -- sorter
-          ["!"] = {
-            flag = "invert-match",
+          ['!'] = {
+            flag = 'invert-match',
           },
           -- HOW TO OPT OUT OF PREFIX
           -- ^ is not a default prefix and safe example
-          ["^"] = false
+          ['^'] = false
         }
       },
       workspaces = {
@@ -114,8 +114,8 @@ local function setup()
         -- default is false
         keep_insert = true,
         -- Highlight group used for the path in the picker,
-        -- default is "String"
-        path_hl = "String"
+        -- default is 'String'
+        path_hl = 'String'
       }
     },
   })
@@ -126,7 +126,7 @@ require('telescope').load_extension('undo')
 require('telescope').load_extension('ui-select')
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('egrepify')
-require('telescope').load_extension("workspaces")
+require('telescope').load_extension('workspaces')
 
 vim.api.nvim_create_autocmd('User', {
   pattern = 'WorkspacesLoaded',

@@ -1,4 +1,4 @@
-local tbuiltin = require("telescope.builtin")
+local tbuiltin = require('telescope.builtin')
 local legendary = require('legendary')
 local lFilters = require('legendary.filters')
 
@@ -37,10 +37,10 @@ legendary.setup({
       'Focus file explorer'),
 
     -- switch between windows and buffers
-    lkmp("<a-h>", "<c-w>h", " window left"),
-    lkmp("<a-l>", "<c-w>l", " window right"),
-    lkmp("<a-j>", "<c-w>j", " window down"),
-    lkmp("<a-k>", "<c-w>k", " window up"),
+    lkmp('<a-h>', '<c-w>h', ' window left'),
+    lkmp('<a-l>', '<c-w>l', ' window right'),
+    lkmp('<a-j>', '<c-w>j', ' window down'),
+    lkmp('<a-k>', '<c-w>k', ' window up'),
 
     -- [
     --   Remap for dealing with word wrap
@@ -48,8 +48,8 @@ legendary.setup({
     --   so it doesn't alter d, y or c behaviour
     -- ]
     -- keep normal behaviour with CTRL-k
-    lkmp("<c-j>", "j", "normal down move"),
-    lkmp("<c-k>", "k", "normal up move"),
+    lkmp('<c-j>', 'j', 'normal down move'),
+    lkmp('<c-k>', 'k', 'normal up move'),
     lkmp(
       'k',
       'v:count || mode(1)[0:1] == "no" ? "k" : "gk"',
@@ -64,32 +64,32 @@ legendary.setup({
     ),
 
     -- keep cursor centered when moving
-    lkmp("<C-d>", "<C-d>zz", 'keep cursor centered'),
-    lkmp("<C-u>", "<C-u>zz", 'keep cursor centered'),
+    lkmp('<C-d>', '<C-d>zz', 'keep cursor centered'),
+    lkmp('<C-u>', '<C-u>zz', 'keep cursor centered'),
 
     -- go to end of word and enter insert mode
-    lkmp("e", "ea", "go to end of wrod + into insert mode"),
-    lkmp("<leader>d", "<cmd>lua MiniBufremove.delete()<CR>",
-      "close + delete the buffer"),
+    lkmp('e', 'ea', 'go to end of wrod + into insert mode'),
+    lkmp('<leader>d', '<cmd>lua MiniBufremove.delete()<CR>',
+      'close + delete the buffer'),
 
     -- Diagnostic
-    lkmp("<leader>e", vim.diagnostic.open_float,
-      "diagnostic float"),
-    lkmp("<leader>q", vim.diagnostic.setloclist,
-      "diagnostic loc list"),
+    lkmp('<leader>e', vim.diagnostic.open_float,
+      'diagnostic float'),
+    lkmp('<leader>q', vim.diagnostic.setloclist,
+      'diagnostic loc list'),
 
     -- TODO:
-    -- "Zoom" in/out
-    -- lkmp("<C-=>", function() FN.font.adjustFontSize(1) end,
-    --   "=  increase font size"),
-    -- lkmp("<C-+>", function() FN.font.adjustFontSize(1) end,
-    --   "+  increase font size"),
-    -- lkmp("<C-->", function() FN.font.adjustFontSize(-1) end,
-    --   "+  decrease font size"),
+    -- 'Zoom' in/out
+    -- lkmp('<C-=>', function() FN.font.adjustFontSize(1) end,
+    --   '=  increase font size'),
+    -- lkmp('<C-+>', function() FN.font.adjustFontSize(1) end,
+    --   '+  increase font size'),
+    -- lkmp('<C-->', function() FN.font.adjustFontSize(-1) end,
+    --   '+  decrease font size'),
     -- lkmp(
-    --   "<C-0>",
+    --   '<C-0>',
     --   function() FN.font.adjustFontSize(0, true) end,
-    --   "+  reset font size"
+    --   '+  reset font size'
     -- ),
 
     -- TODO: json parse/compact etc
@@ -149,7 +149,7 @@ legendary.setup({
       function()
         vim.cmd('WorkspacesOpen')
         -- got to normal mode, I ussually use MRU project..
-        vim.schedule(function() vim.cmd("stopinsert") end)
+        vim.schedule(function() vim.cmd('stopinsert') end)
       end,
       'Sessions / Projects'
     ),
@@ -192,7 +192,7 @@ legendary.setup({
         { 'TextYankPost' },
         function()
           vim.highlight.on_yank({
-            higroup = "IncSearch",
+            higroup = 'IncSearch',
             timeout = 120,
           })
         end,
@@ -472,7 +472,7 @@ legendary.setup({
     {
       'KubeCtl',
       function()
-        require("kubectl").toggle()
+        require('kubectl').toggle()
       end,
       description = 'Toggles kubectl',
     },

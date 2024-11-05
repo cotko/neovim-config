@@ -53,7 +53,7 @@ local servers = {
     settings = {
       Lua = {
         completion = {
-          callSnippet = "Replace",
+          callSnippet = 'Replace',
         },
         workspace = {
           -- Don't analyze code from submodules

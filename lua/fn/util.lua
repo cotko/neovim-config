@@ -27,7 +27,7 @@ fn.toggleIndents = function ()
   fn.setIndent(vim.opt, indent, tabs)
 
   vim.notify(
-    (not tabs and (indent .. " spaces") or "tabs") .. ' identation',
+    (not tabs and (indent .. ' spaces') or 'tabs') .. ' identation',
     2
   )
 end
@@ -134,7 +134,7 @@ end
 
 fn.get_buffer_name = fn.wrap_bufnr(function(bufnr)
   local name = vim.api.nvim_buf_get_name(bufnr)
-  return vim.fn.fnamemodify(name, ":t")
+  return vim.fn.fnamemodify(name, ':t')
 end)
 
 return fn

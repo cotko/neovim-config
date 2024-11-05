@@ -2,7 +2,7 @@ require('typescript-tools').setup({
   settings = {
      -- https://github.com/microsoft/TypeScript/blob/v5.0.4/src/server/protocol.ts#L3439
     tsserver_file_preferences = {
-      includeInlayParameterNameHints = "all",
+      includeInlayParameterNameHints = 'all',
       includeCompletionsForModuleExports = true,
       quotePreference = 'single',
       includeCompletionsForImportStatements = true,

@@ -219,9 +219,9 @@ later(function()
   require('oil').setup({
     delete_to_trash = true,
     keymaps = {
-      ["cd"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory", mode = "n" },
-      ["gx"] = "actions.open_external",
-      ["H"] = "actions.toggle_hidden",
+      ['cd'] = { 'actions.cd', opts = { scope = 'tab' }, desc = ':tcd to the current oil directory', mode = 'n' },
+      ['gx'] = 'actions.open_external',
+      ['H'] = 'actions.toggle_hidden',
     },
   })
 end)

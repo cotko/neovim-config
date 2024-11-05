@@ -29,12 +29,12 @@ if vim.g.colors_name ~= 'onedark' then
     style = 'warm',
     transparent = false,
     ending_tildes = true,
-    -- toggle_style_key = "<leader>tt",
+    -- toggle_style_key = '<leader>tt',
     toggle_style_key = nil,
     -- toggle_style_list = {
     --  'dark', 'darker', 'cool', 'deep', 'warm', 'warmer', 'light'
     -- },
-    -- toggle_style_list = { "dark", "warm", "light" },
+    -- toggle_style_list = { 'dark', 'warm', 'light' },
     toggle_style_list = {},
   })
 end

@@ -4,7 +4,7 @@ ColorScheme = 'onedark'
 --ColorScheme = 'alduin'
 DefaultIndent = 2
 DefaultFontSize = 14
-DefaultFont = "RobotoMono Nerd Font"
+DefaultFont = 'RobotoMono Nerd Font'
 
 AuGroup = 'cotko'
 

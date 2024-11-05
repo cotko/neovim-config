@@ -9,7 +9,7 @@ require('fidget').setup({
 
     window = {
       winblend = 0,
-      border = "rounded",
+      border = 'rounded',
     },
   },
 

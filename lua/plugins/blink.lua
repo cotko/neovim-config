@@ -3,7 +3,7 @@ if CompletionModule ~= 'blink' then
 end
 
 -- fallbacks are needet so blink does not eat up keys like "tab" etc
-require("blink.cmp").setup({
+require('blink.cmp').setup({
   keymap = {
     ['<Tab>'] = { 'select_and_accept', 'fallback' },
     -- ['<Tab>'] = 'accept',

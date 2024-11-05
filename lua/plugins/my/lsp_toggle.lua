@@ -33,11 +33,11 @@ end
 
 local function get_node_text(node)
   local line = Line()
-  line:append(string.rep("  ", node._depth - 1))
+  line:append(string.rep('  ', node._depth - 1))
 
   local checked = ''
   if node.data.is_active then
-    checked = node.data.is_active(bufnr) and "󰗠" or ""
+    checked = node.data.is_active(bufnr) and '󰗠' or ''
   end
 
   line:append(checked .. ' ')
@@ -120,7 +120,7 @@ local function init()
     hide()
   end, {})
 
-  popup:on("BufLeave", function()
+  popup:on('BufLeave', function()
     hide()
   end, { once = true })
 

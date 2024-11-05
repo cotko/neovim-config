@@ -50,7 +50,7 @@ local mod = {
 mod.get_diagnostics_from_output = function(params, done)
   local output = params.output
 
-  if not params.output or output == "" then
+  if not params.output or output == '' then
     done()
   end
 
@@ -60,32 +60,32 @@ mod.get_diagnostics_from_output = function(params, done)
   local current_diagnostic = nil
   local line_start = nil
 
-  for line in output:gmatch("[^\r\n]+") do
+  for line in output:gmatch('[^\r\n]+') do
 
     -- ignore empty lines
-    if line:match("^%s*$") then goto continue end
+    if line:match('^%s*$') then goto continue end
 
     -- Check for error header
     -- (we only expect organize imports and format, lint is disabled)
 
-    local header = line:match("^.-%s+(%w+)%s+━+")
+    local header = line:match('^.-%s+(%w+)%s+━+')
     if header then
       current_header = header
       line_start = nil
     elseif current_header then
 
-      local error_message = line:match("^%s*×%s*(.*)")
+      local error_message = line:match('^%s*×%s*(.*)')
       if error_message then
         current_error = error_message
         line_start = nil
-      elseif line:find("│") then
-        local nums, content = line:match("^(.-)│(.*)")
+      elseif line:find('│') then
+        local nums, content = line:match('^(.-)│(.*)')
         local trimmed_content = content:gsub('%·', ''):gsub('%s', '')
 
         if not nums or not content then goto continue end
 
         local line_nums = {}
-        for num in nums:gmatch("%d+") do
+        for num in nums:gmatch('%d+') do
           table.insert(line_nums, tonumber(num))
         end
 
@@ -94,7 +94,7 @@ mod.get_diagnostics_from_output = function(params, done)
         -- b) if there is no - or + sign at the content part of diff
 
         local diag_end = false
-        if not content:find("^%s*+") and not content:find("^%s*-") then
+        if not content:find('^%s*+') and not content:find('^%s*-') then
           diag_end = true
           line_start = line_nums[1]
         end
@@ -111,7 +111,7 @@ mod.get_diagnostics_from_output = function(params, done)
 
         local is_content_empty = trimmed_content == ''
           or trimmed_content == '-'
-          or not content:find("^%s*+") -- if no "addiotions" we can consider empty change
+          or not content:find('^%s*+') -- if no 'addiotions' we can consider empty change
 
         -- if #line_nums < 1 then goto continue end
 

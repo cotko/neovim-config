@@ -31,7 +31,7 @@ require('conform').setup({
 })
 
 vim.api.nvim_create_user_command(
-  "Format",
+  'Format',
   function(args)
     local range = nil
     if args.count ~= -1 then
@@ -46,7 +46,7 @@ vim.api.nvim_create_user_command(
           args.line1,
           0,
         },
-        ["end"] = {
+        ['end'] = {
           args.line2,
           end_line:len(),
         },

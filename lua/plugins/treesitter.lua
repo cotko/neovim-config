@@ -45,10 +45,10 @@ require('nvim-treesitter.configs').setup({
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "<CR>",
-      node_incremental = "<CR>",
-      scope_incremental = "gsi",
-      node_decremental = "<BS>",
+      init_selection = '<CR>',
+      node_incremental = '<CR>',
+      scope_incremental = 'gsi',
+      node_decremental = '<BS>',
     },
   },
   indent = {
@@ -63,10 +63,10 @@ require('nvim-treesitter.configs').setup({
       lookahead = true,
 
       keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner"
+        ['af'] = '@function.outer',
+        ['if'] = '@function.inner',
+        ['ac'] = '@class.outer',
+        ['ic'] = '@class.inner'
       },
       -- You can choose the select mode (default is charwise 'v')
       selection_modes = {
@@ -86,8 +86,8 @@ require('nvim-treesitter.configs').setup({
       enable = true,
       border = 'none',
       peek_definition_code = {
-        ["<leader>lf"] = "@function.outer",
-        ["<leader>lF"] = "@class.outer",
+        ['<leader>lf'] = '@function.outer',
+        ['<leader>lF'] = '@class.outer',
       },
     },
   },
