@@ -13,7 +13,12 @@ nls.setup({
 
     nls.builtins.diagnostics.fish,
     --nls.builtins.diagnostics.todo_comments,
+
   },
 })
 
 biome.register()
+
+local jq = require('none-ls.formatting.jq')
+jq.filetypes = { 'json', 'jsonc' }
+nls.register(jq)

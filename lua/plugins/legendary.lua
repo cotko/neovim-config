@@ -278,39 +278,32 @@ legendary.setup({
       commands = {
         {
           ':Format',
-          description = 'Format the code using conform',
+          function()
+            vim.lsp.buf.format()
+          end,
+          description = 'Format the code using LSP',
         },
         {
           ':FormatBiome',
           function()
-            require('conform').format({ formatters = {'biome'} })
-          end,
-          description = 'Format the code using conform#biome',
-        },
-        {
-          ':FormatLsp',
-          function()
-            require('conform').format({
-              lsp_format = 'first',
-              formatters = {
-              },
+            vim.lsp.buf.format({
+              filter = function(client)
+                return client.name == 'biome'
+              end
             })
           end,
-          description = 'Format the code using conform#lsp',
+          description = 'Format the code using biome',
         },
         {
-          ':FormatPreferLsp',
+          ':FormatNullLs',
           function()
-            require('conform').format({
-              lsp_format = 'first',
+            vim.lsp.buf.format({
+              filter = function(client)
+                return client.name == 'null-ls'
+              end
             })
           end,
-          description = 'Format the code using conform and prefer lsp',
-        },
-        {
-          ':FormatInfo',
-          function() vim.cmd('ConformInfo') end,
-          description = 'See info about attached formatters',
+          description = 'Format the code using null-ls',
         },
         {
           ':TSJToggle',

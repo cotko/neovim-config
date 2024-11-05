@@ -298,7 +298,13 @@ end)
 -- end)
 
 later(function()
-  add('nvimtools/none-ls.nvim')
+  add({
+    source = 'nvimtools/none-ls.nvim',
+    depends = {
+      'nvimtools/none-ls-extras.nvim'
+    }
+  })
+
   setupPlugin('linting.lua')
 end)
 

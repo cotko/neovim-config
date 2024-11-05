@@ -8,11 +8,12 @@ local function trigger_workspaces_event(event)
     )
   end
 end
+print(vim.fn.stdpath('config') .. '/../nvim_workspaces')
 
 workspaces.setup({
   -- path to a file to store workspaces data in
   -- on a unix system this would be ~/.local/share/nvim/workspaces
-  path = vim.fn.stdpath('data') .. '/workspaces',
+  path = vim.fn.stdpath('config') .. '/../nvim_workspaces',
 
   -- to change directory for nvim (:cd), or only for window (:lcd)
   -- deprecated, use cd_type instead
