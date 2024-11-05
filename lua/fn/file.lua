@@ -10,8 +10,8 @@ local function clearPrompt()
 end
 
 fn.better_copy = function(node)
-  -- what `wrap_node` helper does in nvim-tree..
-  node = node or require("nvim-tree.lib").get_node_at_cursor()
+  node = FNS.util.nvim_tree_get_node(node)
+  if not node then return end
 
   if node == nil then
     FNS.util.warn("Got 'nil' as file node")

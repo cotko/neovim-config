@@ -70,7 +70,6 @@ require('lualine').setup({
         -- :p - absolute path
         -- :h remove file name and jsut keep dir
         local cwd = vim.fn.expand('%:p:h')
-        print(cwd)
         require('telescope.builtin').git_branches({
           cwd = cwd
         })
@@ -93,9 +92,30 @@ require('lualine').setup({
         vim.cmd('Telescope diagnostics')
       end
     }},
-    lualine_x = {},
+    lualine_x = {{
+      function()
+        ---@type string|boolean
+        local label = false
+        local bufnr = vim.api.nvim_get_current_buf()
+        local clients = vim.lsp.get_clients({ bufnr = bufnr })
+        for _, client in ipairs(clients) do
+          if client.attached_buffers[bufnr] then
+            label = label and label .. ' ' .. client.name or client.name
+          end
+        end
+
+        return label or '(no clients)'
+      end,
+      icon = { 'LSP', align='right', color='Added'},
+      on_click = function()
+        vim.cmd('LSPToggler')
+      end
+    }},
     lualine_y = {},
-    lualine_z = {}
+    lualine_z = {{
+      'datetime',
+      style = '\'%H:%M',
+    }}
   },
 
   winbar = {

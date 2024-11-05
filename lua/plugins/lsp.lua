@@ -25,27 +25,13 @@ vim.diagnostic.config({
 local servers = {
   -- See `:help lspconfig-all` for a list of all the pre-configured LSPs
   biome = {
-  	single_file_support = false,
-  	-- root_dir = function(...)
-  	--   local foo = biomeRootPattern(...)
-  	--   print("biome root" .. vim.inspect(foo))
-  	--   return foo
-  	--   --return '/mnt/klet/koda/gid/projects/apps-ul'
-  	-- end,
-    init_options = {
-      reportFormattingDiagnostics = true,
-    },
-    settings = {
-      biome = {
-        -- Enable reporting of formatting issues as diagnostics
-        checkOnSave = {
-          enable = true,
-          command = 'check',
-        },
-      },
-    },
-    on_attach = function(client, bufnr)
-    end,
+    capabilities = {
+      textDocument = {
+        diagnostic = {
+          -- dynamicRegistration = true,
+        }
+      }
+    }
   },
   --eslint = {},
   gopls = {},

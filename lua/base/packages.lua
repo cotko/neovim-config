@@ -25,11 +25,17 @@ local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 local setupPlugin = function(path) dofile(PluginSource .. path) end
 
 now(function()
+  add({ source = 'echasnovski/mini.deps', })
+
+  -- Notifications
+  add('j-hui/fidget.nvim')
+  setupPlugin('fidget.lua')
+
   -- Theme
   add({ source = 'navarasu/onedark.nvim', })
   add({ source = 'RRethy/base16-nvim', })
   add({ source = 'bakageddy/alduin.nvim', })
-  add({ source = 'rose-pine/neovim' })
+  add({ source = 'shaunsingh/nord.nvim' })
   add({
     source = 'zenbones-theme/zenbones.nvim',
     depends = {
@@ -37,12 +43,6 @@ now(function()
     },
   })
   setupPlugin('theme.lua')
-
-  -- Notifications
-  add({
-    source = 'j-hui/fidget.nvim'
-  })
-  setupPlugin('fidget.lua')
 
   -- Telescope
   local function build_fzf(params)
@@ -100,8 +100,6 @@ now(function()
     }}
   })
   setupPlugin('treesitter.lua')
-
-  -- Install LSP
 
   -- completion plugins
   add('ms-jpq/coq_nvim')
@@ -180,6 +178,7 @@ now(function()
       --'leoluz/nvim-dap-go',
     }
   })
+
   setupPlugin('debug.lua')
   setupPlugin('lsp.lua')
 end)
@@ -212,6 +211,20 @@ later(function()
   })
   setupPlugin('file_explorer.lua')
 end)
+later(function()
+  add({
+    source = 'stevearc/oil.nvim',
+    depends = { 'nvim-tree/nvim-web-devicons' },
+  })
+  require('oil').setup({
+    delete_to_trash = true,
+    keymaps = {
+      ["cd"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory", mode = "n" },
+      ["gx"] = "actions.open_external",
+      ["H"] = "actions.toggle_hidden",
+    },
+  })
+end)
 
 -- Util
 later(function()
@@ -238,6 +251,12 @@ later(function()
     }
 })
 end)
+
+later(function()
+  add('meznaric/key-analyzer.nvim')
+  require('key-analyzer').setup({})
+end)
+
 
 -- Expand/collapse (join/split) code blocks (also JSON etc)
 later(function()
@@ -267,15 +286,22 @@ later(function()
 end)
 
 -- Formatting/linting
-later(function()
-  add('stevearc/conform.nvim')
-  setupPlugin('formatting.lua')
-end)
+
+--later(function()
+--  add('stevearc/conform.nvim')
+--  setupPlugin('formatting.lua')
+--end)
+
+-- later(function()
+--   add('mfussenegger/nvim-lint')
+--   setupPlugin('linting.lua')
+-- end)
 
 later(function()
-  add('mfussenegger/nvim-lint')
+  add('nvimtools/none-ls.nvim')
   setupPlugin('linting.lua')
 end)
+
 
 -- UI
 later(function()
@@ -325,5 +351,5 @@ later(function()
   add('monkoose/neocodeium')
   local neocodeium = require('neocodeium')
   neocodeium.setup()
-  vim.keymap.set('i', '<A-f>', neocodeium.accept)
+  vim.keymap.set('i', '<m-l>', neocodeium.accept)
 end)

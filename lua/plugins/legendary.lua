@@ -126,13 +126,13 @@ legendary.setup({
       {'n', 'i' }),
     tLkmp(
       '<leader><leader>',
-      '<cmd>Telescope buffers sort_mru=true sort_lastused=true<CR>',
+      '<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal<CR>',
       '[ ] Find existing buffers (MRU)'
     ),
-    tLkmp('<leader>:', '<cmd>Telescope command_history<cr>',
+    tLkmp('<leader>:', '<cmd>Telescope command_history initial_mode=normal<cr>',
       'Command History'),
 
-    tLkmp('<leader>r', tbuiltin.oldfiles,
+    tLkmp('<leader>r', '<cmd>Telescope oldfiles initial_mode=normal<cr>',
       '[F]ind [R]ecent Files'),
 
     tLkmp('<leader>fg', tbuiltin.live_grep,
@@ -145,7 +145,12 @@ legendary.setup({
       'Find Files (Root Dir)'
     ),
 
-    tLkmp('<leader>p', '<cmd>WorkspacesOpen<CR>',
+    tLkmp('<leader>p',
+      function()
+        vim.cmd('WorkspacesOpen')
+        -- got to normal mode, I ussually use MRU project..
+        vim.schedule(function() vim.cmd("stopinsert") end)
+      end,
       'Sessions / Projects'
     ),
 
@@ -445,7 +450,6 @@ legendary.setup({
       end,
       description = 'Enable this plugin',
     },
-
     {
       'BiomeToggle',
       function()
@@ -455,6 +459,15 @@ legendary.setup({
         )
       end,
       description = 'Toggles biome linter/formatter',
+    },
+    {
+      'LSPToggle',
+      description = 'Opens a toggler for LSPs',
+    },
+    {
+      'InspectLSP',
+      FNS.util.inspect_lsp_client,
+      description = 'Prompts for LSP client and then prints its config',
     },
     {
       'KubeCtl',
@@ -468,7 +481,7 @@ legendary.setup({
       description = 'Choose kubernetes instance',
     },
     {
-      itemgroup = 'Marks / jupms',
+      itemgroup = 'Marks / Jumps',
       commands = {
         {
           'MarksDeleteAll',
@@ -503,3 +516,31 @@ legendary.setup({
     },
   },
 })
+
+
+-- TODO: dynamically register format commands via vim.buf.format()
+-- see help buf.format -> for filtering
+
+-- -- Function to register buffer-local commands
+-- local function register_buffer_commands(bufnr)
+--   local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+--   if filetype == 'lua' then
+--     legendary.commands({
+--       {
+--         ':LuaFormat',
+--         description = 'Format Lua code',
+--         buffer = bufnr,
+--         function()
+--           vim.lsp.buf.formatting()
+--         end,
+--       },
+--     })
+--   end
+-- end
+-- 
+-- -- Autocommand to register commands when a buffer is entered or its filetype changes
+-- vim.api.nvim_create_autocmd({'BufEnter', 'FileType'}, {
+--   callback = function(args)
+--     register_buffer_commands(args.buf)
+--   end,
+-- })

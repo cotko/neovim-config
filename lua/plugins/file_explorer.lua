@@ -3,12 +3,12 @@ local uv = require('luv')
 local resizeStep = 10
 local size = 40
 
-local doOpen = vim.api.nvim_win_get_width(0) > 40
+local canOpen = vim.api.nvim_win_get_width(0) > 40
 
 local function resize(wider)
-  local size = '+' .. resizeStep
-  if not wider then size = '-' .. resizeStep end
-  vim.cmd('NvimTreeResize' .. size)
+  local new_size = '+' .. resizeStep
+  if not wider then new_size = '-' .. resizeStep end
+  vim.cmd('NvimTreeResize' .. new_size)
 end
 
 local function on_attach(bufnr)
@@ -38,10 +38,9 @@ local function on_attach(bufnr)
   end
 
   local function get_root(node)
-    node = node or require("nvim-tree.lib").get_node_at_cursor()
-    if not node then
-      return
-    end
+    node = FNS.util.nvim_tree_get_node(node)
+    if not node then return end
+
     local path = node.absolute_path or uv.cwd()
     if node.type ~= 'directory' and node.parent then
       path = node.parent.absolute_path
@@ -158,18 +157,21 @@ local function on_attach(bufnr)
 
   kmset('<BS>', api.tree.change_root_to_parent, 'go back/up one folder')
   kmset('?', api.tree.toggle_help, 'toggle help')
-  kmset('O',api.node.run.system,
+  kmset('gx',api.node.run.system,
     'open a file with default system application')
 
 
 end
 
-if doOpen then
-  vim.api.nvim_create_autocmd('User', {
-    pattern = 'SetupComplete',
-    callback = api.tree.open,
-  })
-end
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'WorkspacesLoaded',
+  callback = function()
+    if not canOpen then return end
+    api.tree.open()
+  end
+})
+
+
 
 require('nvim-tree').setup({
   on_attach = on_attach,
