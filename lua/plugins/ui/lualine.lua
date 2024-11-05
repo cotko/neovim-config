@@ -1,8 +1,10 @@
 local workspaces_ok, workspaces = pcall(require, 'workspaces')
+local codeium = require('plugins.ui.codeium')
+local lsp = require('plugins.ui.lsp')
 
 require('lualine').setup({
   options = {
-    theme = 'ayu_mirage',
+    --theme = 'ayu_mirage',
     --section_separators = '',
     --component_separators = '',
 
@@ -92,25 +94,10 @@ require('lualine').setup({
         vim.cmd('Telescope diagnostics')
       end
     }},
-    lualine_x = {{
-      function()
-        ---@type string|boolean
-        local label = false
-        local bufnr = vim.api.nvim_get_current_buf()
-        local clients = vim.lsp.get_clients({ bufnr = bufnr })
-        for _, client in ipairs(clients) do
-          if client.attached_buffers[bufnr] then
-            label = label and label .. ' ' .. client.name or client.name
-          end
-        end
-
-        return label or '(no clients)'
-      end,
-      icon = { 'LSP', align='right', color='Added'},
-      on_click = function()
-        vim.cmd('LSPToggler')
-      end
-    }},
+    lualine_x = {
+      codeium(),
+      lsp(),
+    },
     lualine_y = {},
     lualine_z = {{
       'datetime',
