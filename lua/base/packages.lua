@@ -179,6 +179,9 @@ now(function()
     }
   })
 
+  -- lens, like IDE (# references, # definition, etc)
+  add('VidocqH/lsp-lens.nvim')
+
   setupPlugin('debug.lua')
   setupPlugin('lsp.lua')
 end)
@@ -228,10 +231,10 @@ end)
 
 -- Util
 later(function()
-  add({
-	  source = 'echasnovski/mini.bufremove',
-  })
+  add('echasnovski/mini.bufremove')
+  add('echasnovski/mini.surround')
   require('mini.bufremove').setup({})
+  require('mini.surround').setup({})
 end)
 
 later(function()
@@ -256,6 +259,12 @@ later(function()
   add('meznaric/key-analyzer.nvim')
   require('key-analyzer').setup({})
 end)
+
+later(function()
+  add('nvim-pack/nvim-spectre')
+  require('spectre').setup({})
+end)
+
 
 
 -- Expand/collapse (join/split) code blocks (also JSON etc)
@@ -286,16 +295,6 @@ later(function()
 end)
 
 -- Formatting/linting
-
---later(function()
---  add('stevearc/conform.nvim')
---  setupPlugin('formatting.lua')
---end)
-
--- later(function()
---   add('mfussenegger/nvim-lint')
---   setupPlugin('linting.lua')
--- end)
 
 later(function()
   add({

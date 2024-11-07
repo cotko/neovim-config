@@ -164,11 +164,10 @@ mod.get_diagnostics_from_output = function(params, done)
 end
 
 mod.get_code_actions_from_output = function(params, done)
-
   mod.get_diagnostics_from_output(params,
     function (diagnostics)
       if not diagnostics then done() end
-      print(vim.inspect(diagnostics))
+      --print(vim.inspect(diagnostics))
 
       local actions = {}
       for _, diagnostic in ipairs(diagnostics) do

@@ -69,13 +69,13 @@ legendary.setup({
 
     -- go to end of word and enter insert mode
     lkmp('e', 'ea', 'go to end of wrod + into insert mode'),
-    lkmp('<leader>d', '<cmd>lua MiniBufremove.delete()<CR>',
+    lkmp('<leader>d', '<cmd>lua MiniBufremove.delete(nil, true)<CR>',
       'close + delete the buffer'),
 
     -- Diagnostic
     lkmp('<leader>e', vim.diagnostic.open_float,
       'diagnostic float'),
-    lkmp('<leader>q', vim.diagnostic.setloclist,
+    lkmp('<leader>l', vim.diagnostic.setloclist,
       'diagnostic loc list'),
 
     -- TODO:
@@ -108,6 +108,10 @@ legendary.setup({
     lkmp('<ESC>', '<cmd> noh <CR>', 'no highlight'),
     lkmp('<leader>g', '<cmd> :e# <CR>', 'goto prev buffer'),
 
+    lkmp('<F2>', FNS.util.toggleIgnoreCase,
+      'toggle ignore case'
+    ),
+
     lkmp('<F3>', ':echo expand("%:p")<CR>',
       'show file location'),
     lkmp('<F4>', FNS.util.toggleHlSearch, 'toggle highlight'),
@@ -117,6 +121,33 @@ legendary.setup({
       'toggle line numbering'),
     lkmp('<F7>', vim.cmd.UndotreeToggle, 'toggle undo tree'),
 
+
+    -- apply common macros
+    lkmp('<leader>q', '@q', 'Quickly apply macro q'),
+    lkmp('<leader>m', '@q', 'Quickly apply macro m'),
+
+    -- do not jump on asterisk
+    lkmp('*', 'm`<cmd>keepjumps normal! *``<CR><cmd>set hls<CR>',
+      'Don\'t jump on first * -- simpler vim-asterisk'),
+
+    -- do not yank empty deleted lines
+    lkmp('dd',
+      function()
+        if vim.api.nvim_get_current_line():match('^%s*$') then
+          return '"_dd'
+        else
+        return 'dd'
+        end
+      end,
+      'Smart dd, don\'t yank empty lines',
+      { expr = true }
+    ),
+
+    -- treesj toggle
+    lkmp('gs', '<cmd>TSJToggle<CR>', 'treesj toggle'),
+
+    lkmp('gss', '<cmd>TSJFormatExpand<CR>',
+      'treesj expand recursive'),
 
     -- Telescope stuff
     tLkmp('<leader>t', '<cmd>Telescope<CR>', 'Open telescope'),
@@ -143,6 +174,36 @@ legendary.setup({
 
     tLkmp('<leader>ff', tbuiltin.find_files,
       'Find Files (Root Dir)'
+    ),
+
+    lkmp('<leader>ss',
+      function()
+        require('spectre').toggle()
+      end,
+      'Search (Spectre)'
+    ),
+
+    lkmp(
+      '<leader>sw',
+      function()
+        require('spectre').open_visual({ select_word = true })
+      end,
+      'Search current word (Spectre)'
+    ),
+
+    lkmpm({ 'v' }, '<leader>sw',
+      function()
+        require('spectre').open_visual()
+      end,
+      'Search current word (Spectre)'
+    ),
+
+    lkmp(
+      '<leader>sp',
+      function()
+        require('spectre').open_file_search({ select_word = true })
+      end,
+      'Search on current file (Spectre)'
     ),
 
     tLkmp('<leader>p',
@@ -435,43 +496,23 @@ legendary.setup({
         },
       },
     },
-
     {
-      'RenderMarkdownToggle',
-      function()
-        require('render-markdown').toggle()
-      end,
-      description = 'Enable this plugin',
-    },
-    {
-      'BiomeToggle',
-      function()
-        vim.api.nvim_exec_autocmds(
-          'User',
-          { pattern = 'BiomeToggle' }
-        )
-      end,
-      description = 'Toggles biome linter/formatter',
-    },
-    {
-      'LSPToggle',
-      description = 'Opens a toggler for LSPs',
-    },
-    {
-      'InspectLSP',
-      FNS.util.inspect_lsp_client,
-      description = 'Prompts for LSP client and then prints its config',
-    },
-    {
-      'KubeCtl',
-      function()
-        require('kubectl').toggle()
-      end,
-      description = 'Toggles kubectl',
-    },
-    {
-      'KubeCtx',
-      description = 'Choose kubernetes instance',
+      itemgroup = 'LSP',
+      commands = {
+        {
+          'LspToggler',
+          description = 'Opens a toggler for LSPs',
+        },
+        {
+          'LspLensToggle',
+          description = 'Toggles LSP lens',
+        },
+        {
+          'InspectLSP',
+          FNS.util.inspect_lsp_client,
+          description = 'Prompts for LSP client and then prints its config',
+        },
+      },
     },
     {
       itemgroup = 'Marks / Jumps',
@@ -507,33 +548,32 @@ legendary.setup({
         }
       },
     },
+    {
+      'RenderMarkdownToggle',
+      function()
+        require('render-markdown').toggle()
+      end,
+      description = 'Enable this plugin',
+    },
+    {
+      'KubeCtl',
+      function()
+        require('kubectl').toggle()
+      end,
+      description = 'Toggles kubectl',
+    },
+    {
+      'KubeCtx',
+      description = 'Choose kubernetes instance',
+    },
+    {
+      'GG',
+      function()
+        local path = FNS.util.get_buffer_file_parent()
+          or FNS.util.get_project_root()
+        os.execute('cd ' .. path .. ' && gh browse &>/dev/null')
+      end,
+      description = 'Open current git repo (gh browse)',
+    }
   },
 })
-
-
--- TODO: dynamically register format commands via vim.buf.format()
--- see help buf.format -> for filtering
-
--- -- Function to register buffer-local commands
--- local function register_buffer_commands(bufnr)
---   local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
---   if filetype == 'lua' then
---     legendary.commands({
---       {
---         ':LuaFormat',
---         description = 'Format Lua code',
---         buffer = bufnr,
---         function()
---           vim.lsp.buf.formatting()
---         end,
---       },
---     })
---   end
--- end
--- 
--- -- Autocommand to register commands when a buffer is entered or its filetype changes
--- vim.api.nvim_create_autocmd({'BufEnter', 'FileType'}, {
---   callback = function(args)
---     register_buffer_commands(args.buf)
---   end,
--- })

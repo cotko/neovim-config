@@ -43,19 +43,19 @@ fn.toggleHlSearch = function()
   vim.notify('hl search: ' .. vim.inspect(vim.o.hlsearch))
 end
 
+fn.toggleIgnoreCase = function()
+  vim.o.ignorecase = not vim.o.ignorecase
+  vim.notify('ignore case: ' .. vim.inspect(vim.o.ignorecase))
+end
+
+
+
 fn.get_project_root = function()
   return vim.fn.getcwd()
 end
 
 fn.which = function(cmd)
   return vim.fn.systemlist('PATH=/usr/bin:$PATH which ' .. cmd)[1]
-end
-
-fn.register_setting = function(s)
-  vim.api.nvim_exec_autocmds(
-    'User',
-    { pattern = 'RegisterSetting', data = s }
-  )
 end
 
 fn.inspect_lsp_client = function()
@@ -71,7 +71,7 @@ fn.inspect_lsp_client = function()
 
       -- Create a temporary buffer to show the configuration
       local buf = vim.api.nvim_create_buf(false, true)
-      local win = vim.api.nvim_open_win(buf, true, {
+      vim.api.nvim_open_win(buf, true, {
         relative = 'editor',
         width = math.floor(vim.o.columns * 0.75),
         height = math.floor(vim.o.lines * 0.90),
@@ -136,5 +136,14 @@ fn.get_buffer_name = fn.wrap_bufnr(function(bufnr)
   local name = vim.api.nvim_buf_get_name(bufnr)
   return vim.fn.fnamemodify(name, ':t')
 end)
+
+fn.get_buffer_file_parent = fn.wrap_bufnr(function(bufnr)
+  local name = vim.api.nvim_buf_get_name(bufnr)
+  if name == '' or name == nil then return false end
+
+  return vim.fn.fnamemodify(name, ':h')
+end)
+
+
 
 return fn

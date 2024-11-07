@@ -1,6 +1,34 @@
 local workspaces_ok, workspaces = pcall(require, 'workspaces')
 local codeium = require('plugins.ui.codeium')
 local lsp = require('plugins.ui.lsp')
+local misc = require('plugins.ui.misc')
+local lualine_mode = require('lualine.utils.mode')
+
+local section_config = {
+  lualine_a = {
+    {
+      function()
+        return vim.o.ft == 'NvimTree'
+          and vim.fn.fnamemodify(vim.fn.getcwd(), ':~')
+          or lualine_mode.get_mode()
+      end
+    },
+    'searchcount',
+    'selectioncount',
+  },
+  lualine_b = {},
+  lualine_c = {},
+  lualine_x = {
+    misc.indent(),
+    misc.ignorecase(),
+    {'encoding', separator = misc.separator},
+    -- {'fileformat', separator = misc.separator},
+    {'filetype', separator = misc.separator},
+    {'filesize', separator = misc.separator},
+  },
+  lualine_y = {'progress'},
+  lualine_z = {'location'},
+}
 
 require('lualine').setup({
   options = {
@@ -23,22 +51,8 @@ require('lualine').setup({
 
   },
 
-  sections = {
-    lualine_a = {'mode', 'searchcount', 'selectcount'},
-    lualine_b = {},
-    lualine_c = {},
-    lualine_x = {'encoding', 'fileformat', 'filetype', 'filesize'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-  inactive_sections = {
-    lualine_a = {'mode', 'searchcount', 'selectcount'},
-    lualine_b = {},
-    lualine_c = {},
-    lualine_x = {'encoding', 'fileformat', 'filetype', 'filesize'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
+  sections = section_config,
+  inactive_sections = section_config,
 
   tabline = {
     lualine_a = {{
@@ -129,7 +143,7 @@ require('lualine').setup({
   },
 
   extensions = {
-    'nvim-tree',
+    --'nvim-tree',
     'mason',
   }
 })

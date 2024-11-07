@@ -8,7 +8,6 @@ local function trigger_workspaces_event(event)
     )
   end
 end
-print(vim.fn.stdpath('config') .. '/../nvim_workspaces')
 
 workspaces.setup({
   -- path to a file to store workspaces data in

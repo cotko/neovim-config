@@ -343,3 +343,13 @@ require('mason-lspconfig').setup({
 })
 
 require('plugins.blink')
+
+local _, lsplens = pcall(require, 'lsp-lens')
+if lsplens then
+  lsplens.setup({
+    enable = false,
+    sections = {
+      git_authors = false,
+    }
+  })
+end

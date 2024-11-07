@@ -147,8 +147,7 @@ local function init()
   show()
 end
 
-vim.api.nvim_create_user_command('LSPToggler', function()
-  local f = popup == nil
+vim.api.nvim_create_user_command('LspToggler', function()
   if hidden then
     bufnr = vim.api.nvim_get_current_buf()
     init()

@@ -1,18 +1,19 @@
+local misc = require('plugins.ui.misc')
 local ok, neocodeium = nil, nil
 
 local  symbols = {
   status = {
-    [0] = "󰚩 ", -- Enabled
-    [1] = "󱚧 ", -- Disabled Globally
-    [2] = "󱙻 ", -- Disabled for Buffer
-    [3] = "󱙺 ", -- Disabled for Buffer filetype
-    [4] = "󱙺 ", -- Disabled for Buffer with enabled function
-    [5] = "󱚠 ", -- Disabled for Buffer encoding
+    [0] = '󰚩 ', -- Enabled
+    [1] = '󱚧 ', -- Disabled Globally
+    [2] = '󱙻 ', -- Disabled for Buffer
+    [3] = '󱙺 ', -- Disabled for Buffer filetype
+    [4] = '󱙺 ', -- Disabled for Buffer with enabled function
+    [5] = '󱚠 ', -- Disabled for Buffer encoding
   },
   server_status = {
-    [0] = "󰣺 ", -- Connected
-    [1] = "󰣻 ", -- Connecting
-    [2] = "󰣽 ", -- Disconnected
+    [0] = '󰣺 ', -- Connected
+    [1] = '󰣻 ', -- Connecting
+    [2] = '󰣽 ', -- Disconnected
   },
 }
 
@@ -38,6 +39,7 @@ return function()
         .. symbols.server_status[server_status]
         .. ')'
     end,
+    separator = misc.separator,
     icon = {
       '  ',
       align='right',
