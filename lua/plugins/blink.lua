@@ -17,5 +17,28 @@ require('blink.cmp').setup({
     signature_help = {
       enabled = true,
     }
-  }
+  },
+  --sources = {
+  --  --completion = {
+  --  --  enabled_providers = {
+  --  --    'lsp',
+  --  --    'path',
+  --  --    'snippets',
+  --  --    'buffer',
+  --  --    --'cmdline',
+  --  --  },
+  --  --},
+  --  providers = {
+  --    --cmdline = {
+  --    --  -- IMPORTANT: use the same name as you would for nvim-cmp
+  --    --  name = 'cmdline',
+  --    --  module = 'blink.compat.source',
+
+  --    --  -- all blink.cmp source config options work as normal:
+  --    --  score_offset = -3,
+
+  --    --  opts = {}
+  --    --}
+  --  }
+  --}
 })

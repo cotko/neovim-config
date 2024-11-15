@@ -20,7 +20,7 @@ m.indent = function()
         or '4 spaces'
     end,
     separator = m.separator,
-    on_click = FNS.util.toggleIndents,
+    on_click = FNS.util.toggleIndents
   }
 end
 
@@ -28,8 +28,18 @@ m.ignorecase = function()
   return {
     'vim.o.ignorecase and "ic" or "noic"',
     separator = m.separator,
-    on_click = FNS.util.toggleIgnoreCase,
+    on_click = FNS.util.toggleIgnoreCase
   }
 end
+
+m.hl_search = function()
+  return {
+    'vim.o.hlsearch and "hl" or "nohl"',
+    separator = m.separator,
+    on_click = FNS.util.toggleHlSearch
+  }
+end
+
+
 
 return m

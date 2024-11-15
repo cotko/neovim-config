@@ -8,6 +8,11 @@ local helpers = require('null-ls.helpers')
 local METHOD_DIAGNOSTICS = nls.methods.DIAGNOSTICS_ON_SAVE
 local METHOD_CODE_ACTIONS = nls.methods.CODE_ACTION
 
+-- if `.nobiome` is present in the root then this formatter won't run
+-- but it's possible to enable it anyways via BiomeNlsFormatterToggle
+local formatter_disabled = false
+local enable_biome_user_command = 'BiomeNlsFormatterToggle'
+
 local mod = {
   info = {
     name = 'biome-check',
@@ -28,6 +33,9 @@ local mod = {
       'css',
       'graphql',
     },
+    runtime_condition = function(params)
+      return not formatter_disabled
+    end,
     generator_opts = {
       command = function()
         local local_binary = vim.fn.fnamemodify(
@@ -42,7 +50,7 @@ local mod = {
       from_stderr = true,
       to_stdin = false,
       format = 'raw',
-      use_cache = true,
+      --use_cache = true,
     },
   },
 }
@@ -244,10 +252,48 @@ mod.on_register = function()
   }, biome_ns)
 end
 
+-- TODO: fix this shit: custom namespace does not seem to work
+-- if formatter is additionally enabled after it disabled itself
+
 mod.register = function()
-  require('null-ls').register(mod.diagnostics)
-  require('null-ls').register(mod.code_actions)
+  mod.register_nls()
   mod.on_register()
+  --mod.check_if_disabled()
 end
+
+mod.register_nls = function()
+  if formatter_disabled then
+    nls.deregister(mod.diagnostics)
+    nls.deregister(mod.code_actions)
+  else
+    nls.register(mod.diagnostics)
+    nls.register(mod.code_actions)
+  end
+end
+
+mod.check_if_disabled = function()
+  --local no_biome_file = FNS.util.get_project_root() .. '/.nobiome'
+  --formatter_disabled = vim.fn.filereadable(no_biome_file) == 1
+  --mod.notify_enabled()
+  --mod.register_nls()
+end
+
+mod.notify_enabled = function()
+  vim.notify('Biome nls formatter ' .. (formatter_disabled and 'disabled' or 'enabled'))
+end
+
+vim.api.nvim_create_autocmd('DirChanged', {
+  callback = mod.check_if_disabled
+})
+
+vim.api.nvim_create_user_command(
+  enable_biome_user_command,
+  function ()
+    formatter_disabled = not formatter_disabled
+    mod.register_nls()
+    mod.notify_enabled()
+  end,
+  {}
+)
 
 return mod

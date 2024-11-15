@@ -97,13 +97,11 @@ legendary.setup({
     -- misc
     lkmp('<C-s>', '<cmd> w <CR>', 'save file'),
     lkmp('<C-y>', '<cmd> %y+ <CR>', 'yank whole file'),
+
+    -- insert from * register for all modes
     lkmp('<insert>', '"*p', 'insert content from *'),
-    lkmpm(
-      { 'i', 'c' },
-      '<insert>',
-      '<C-R>*',
-      'insert content from *'
-    ),
+    lkmpm({ 'v' }, '<insert>', '"_c<C-R>*<Esc>', 'insert content from *'),
+    lkmpm({ 'i', 'c' }, '<insert>', '<C-R>*', 'insert content from *'),
 
     lkmp('<ESC>', '<cmd> noh <CR>', 'no highlight'),
     lkmp('<leader>g', '<cmd> :e# <CR>', 'goto prev buffer'),
@@ -512,6 +510,10 @@ legendary.setup({
           FNS.util.inspect_lsp_client,
           description = 'Prompts for LSP client and then prints its config',
         },
+        {
+          'BiomeNlsFormatterToggle',
+          description = 'Toggle Biome NLS formatter',
+        }
       },
     },
     {

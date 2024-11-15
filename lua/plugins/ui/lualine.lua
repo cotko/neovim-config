@@ -1,8 +1,10 @@
 local workspaces_ok, workspaces = pcall(require, 'workspaces')
-local codeium = require('plugins.ui.codeium')
+local ai = require('plugins.ui.ai')
 local lsp = require('plugins.ui.lsp')
 local misc = require('plugins.ui.misc')
 local lualine_mode = require('lualine.utils.mode')
+
+local unpack = table.unpack or unpack
 
 local section_config = {
   lualine_a = {
@@ -21,6 +23,7 @@ local section_config = {
   lualine_x = {
     misc.indent(),
     misc.ignorecase(),
+    misc.hl_search(),
     {'encoding', separator = misc.separator},
     -- {'fileformat', separator = misc.separator},
     {'filetype', separator = misc.separator},
@@ -41,7 +44,7 @@ require('lualine').setup({
     disabled_filetypes = {
       statusline = {
         --'NvimTree',
-        '', -- empty buffers
+        --'', -- empty buffers
       },
       winbar = {
         'NvimTree',
@@ -109,8 +112,11 @@ require('lualine').setup({
       end
     }},
     lualine_x = {
-      codeium(),
-      lsp(),
+      (function()
+        local tbl = { unpack(ai()) }
+        table.insert(tbl, lsp())
+        return unpack(tbl)
+      end)()
     },
     lualine_y = {},
     lualine_z = {{

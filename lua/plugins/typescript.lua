@@ -7,7 +7,7 @@ require('typescript-tools').setup({
       quotePreference = 'single',
       includeCompletionsForImportStatements = true,
       provideRefactorNotApplicableReason = true,
-      includePackageJsonAutoImports = true,
+      includePackageJsonAutoImports = false,
     },
     -- https://github.com/microsoft/TypeScript/blob/v5.0.4/src/server/protocol.ts#L3418
     tsserver_format_options = {

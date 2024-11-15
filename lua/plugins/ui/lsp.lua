@@ -26,7 +26,7 @@ return function()
       end
     },
     on_click = function()
-      vim.cmd('LSPToggler')
+      vim.cmd('LspToggler')
     end
   }
 end

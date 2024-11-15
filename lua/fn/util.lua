@@ -26,10 +26,13 @@ fn.toggleIndents = function ()
   fn.setIndent(vim.g, indent, tabs)
   fn.setIndent(vim.opt, indent, tabs)
 
-  vim.notify(
-    (not tabs and (indent .. ' spaces') or 'tabs') .. ' identation',
-    2
-  )
+  if not FNS.plug.ui_refresh() then
+    vim.notify(
+      (not tabs and (indent .. ' spaces') or 'tabs')
+      .. ' identation',
+      2
+    )
+  end
 end
 
 fn.toggleLineNumbering = function()
@@ -40,12 +43,16 @@ end
 
 fn.toggleHlSearch = function()
   vim.o.hlsearch = not vim.o.hlsearch
-  vim.notify('hl search: ' .. vim.inspect(vim.o.hlsearch))
+  if not FNS.plug.ui_refresh() then
+    vim.notify('hl search: ' .. vim.inspect(vim.o.hlsearch))
+  end
 end
 
 fn.toggleIgnoreCase = function()
   vim.o.ignorecase = not vim.o.ignorecase
-  vim.notify('ignore case: ' .. vim.inspect(vim.o.ignorecase))
+  if not FNS.plug.ui_refresh() then
+    vim.notify('ignore case: ' .. vim.inspect(vim.o.ignorecase))
+  end
 end
 
 

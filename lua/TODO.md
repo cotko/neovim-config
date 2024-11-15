@@ -72,7 +72,7 @@ end, { desc = "Smart dd, don't yank empty lines", expr = true })
 Find a solution to do this:
 
 ```
-/foo/bar/cawer.waerrerge wer /awerkjwart/
+/foo/bar/awer.waerrerge wer /awerkjwart/
             ^ how to replace text between this / and / ?
 ```
 

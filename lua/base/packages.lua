@@ -122,6 +122,8 @@ now(function()
     source = 'saghen/blink.cmp',
     depends = {
       'rafamadriz/friendly-snippets',
+      --'Saghen/blink.compat',
+      --'hrsh7th/cmp-cmdline',
     },
     hooks = {
       post_install = build_blink,
@@ -206,6 +208,17 @@ later(function()
   require('neogit').setup({})
 end)
 
+later(function()
+  add({
+    source = 'kdheepak/lazygit.nvim',
+    depends = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+    },
+  })
+  require('telescope').load_extension('lazygit')
+end)
+
 -- File explorer
 later(function()
   add({
@@ -271,7 +284,8 @@ end)
 later(function()
   add('Wansmer/treesj')
   require('treesj').setup({
-    max_join_length = 9999999
+    max_join_length = 9999999,
+    use_default_keymaps = false
   })
 end)
 
@@ -351,8 +365,6 @@ later(function()
 end)
 
 later(function()
-  --add('Exafunction/codeium.nvim')
-
   add('monkoose/neocodeium')
   local neocodeium = require('neocodeium')
   neocodeium.setup()
@@ -363,4 +375,15 @@ later(function()
   vim.keymap.set('i', '<m-n>', function()
     neocodeium.cycle(-1)
   end)
+end)
+
+later(function()
+  add('supermaven-inc/supermaven-nvim')
+  local supermaven  = require('supermaven-nvim')
+  supermaven.setup({
+    keymaps = {
+      accept_suggestion = "<c-l>",
+       -- clear_suggestion = "<C-]>",
+      accept_word = "<C-j>",
+    }})
 end)
