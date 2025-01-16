@@ -88,4 +88,5 @@ Find a solution to do this:
 
 SE TO:
  - supermaven/codeium se tepeta - ce se en disabla mora delat completion od enablanga
+  - zaenkrat ok, popravit moram da sam napaberkujem completione in jih skupno izrisem
  - ce odprem diffview / undotree mora <alt+e> skocit na pane od enga od teh dveh, naemsto v file tree

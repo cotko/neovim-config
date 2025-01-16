@@ -234,6 +234,18 @@ legendary.setup({
     lkmp('gm', '<cmd>Marks<CR>', 'View marks'),
     lkmp('gj', '<cmd>Jumps<CR>', 'View jumps'),
 
+
+    -- ai
+    lkmpm('i', '<m-l>', FNS.ai.accept_aviailable,
+      'Accept available AI suggestion'),
+    lkmpm('i', '<m-p>', function() FNS.ai.cycle(false) end,
+      'Cycle available AI suggestions'),
+    lkmpm('i', '<m-n>', function() FNS.ai.cycle(true) end,
+      'Cycle available AI suggestions backwards'),
+    lkmpm('i', '<m-c>', FNS.ai.clear,
+      'Clear AI suggestions'),
+
+
   },
   autocmds = {
     {

@@ -338,7 +338,7 @@ later(function()
 end)
 
 later(function()
-  local function build()
+  local function build(params)
     vim.notify('Building asciidoc', vim.log.levels.INFO)
     local obj = vim.system(
       { 'cd server && npm i' },
@@ -371,22 +371,24 @@ later(function()
   add('monkoose/neocodeium')
   local neocodeium = require('neocodeium')
   neocodeium.setup()
-  vim.keymap.set('i', '<m-l>', neocodeium.accept)
-  vim.keymap.set('i', '<m-p>', function()
-    neocodeium.cycle(1)
-  end)
-  vim.keymap.set('i', '<m-n>', function()
-    neocodeium.cycle(-1)
-  end)
+  --vim.keymap.set('i', '<m-l>', neocodeium.accept)
+  --vim.keymap.set('i', '<m-p>', function()
+  --  neocodeium.cycle(1)
+  --end)
+  --vim.keymap.set('i', '<m-n>', function()
+  --  neocodeium.cycle(-1)
+  --end)
 end)
 
 later(function()
   add('supermaven-inc/supermaven-nvim')
   local supermaven  = require('supermaven-nvim')
   supermaven.setup({
-    keymaps = {
-      accept_suggestion = "<m-l>",
-       -- clear_suggestion = "<C-]>",
-      accept_word = "<m-j>",
-    }})
+    disable_keymaps = true,
+    --keymaps = {
+    --  accept_suggestion = "<m-l>",
+    --   -- clear_suggestion = "<C-]>",
+    --  accept_word = "<m-j>",
+    --}
+  })
 end)

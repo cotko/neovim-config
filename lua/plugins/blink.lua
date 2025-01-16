@@ -16,7 +16,6 @@ require('blink.cmp').setup({
     ['<A-9>'] = { function(cmp) cmp.accept({ index = 9 }) end },
 
     ['<Tab>'] = { 'select_and_accept', 'fallback' },
-    -- ['<Tab>'] = 'accept',
 
     ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
 
