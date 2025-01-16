@@ -576,6 +576,14 @@ legendary.setup({
         os.execute('cd ' .. path .. ' && gh browse &>/dev/null')
       end,
       description = 'Open current git repo (gh browse)',
+    },
+    {
+      'GrugFar',
+      description = 'Search/Find and Replace (grug-far)',
+    },
+    {
+      'Spectre',
+      description = 'Search/Find and Replace (spectre)',
     }
   },
 })

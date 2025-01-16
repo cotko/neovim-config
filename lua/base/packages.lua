@@ -205,7 +205,6 @@ later(function()
       'nvim-telescope/telescope.nvim',
     },
   })
-  require('neogit').setup({})
 end)
 
 later(function()
@@ -278,7 +277,11 @@ later(function()
   require('spectre').setup({})
 end)
 
-
+-- spectre alternative
+later(function()
+  add('MagicDuck/grug-far.nvim')
+  require('grug-far').setup({})
+end)
 
 -- Expand/collapse (join/split) code blocks (also JSON etc)
 later(function()
@@ -382,8 +385,8 @@ later(function()
   local supermaven  = require('supermaven-nvim')
   supermaven.setup({
     keymaps = {
-      accept_suggestion = "<c-l>",
+      accept_suggestion = "<m-l>",
        -- clear_suggestion = "<C-]>",
-      accept_word = "<C-j>",
+      accept_word = "<m-j>",
     }})
 end)

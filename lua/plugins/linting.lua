@@ -1,5 +1,5 @@
 local nls = require('null-ls')
-local biome = require('plugins.my.linters.biome-nls')
+-- local biome = require('plugins.my.linters.biome-nls')
 
 nls.setup({
   sources = {
@@ -17,7 +17,7 @@ nls.setup({
   },
 })
 
-biome.register()
+-- biome.register()
 
 local jq = require('none-ls.formatting.jq')
 jq.filetypes = { 'json', 'jsonc' }

@@ -23,6 +23,9 @@ ask chatgpt this:
 spectre
 https://github.com/nvim-pack/nvim-spectre
 
+GrugFar instead of sectre?
+https://github.com/MagicDuck/grug-far.nvim
+
 -- -- Formatting
 -- later(function()
 -- add('stevearc/conform.nvim')
@@ -81,3 +84,8 @@ Find a solution to do this:
 ```
 { 1,2,45}
 ```
+
+
+SE TO:
+ - supermaven/codeium se tepeta - ce se en disabla mora delat completion od enablanga
+ - ce odprem diffview / undotree mora <alt+e> skocit na pane od enga od teh dveh, naemsto v file tree

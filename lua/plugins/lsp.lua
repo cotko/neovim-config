@@ -36,6 +36,8 @@ local servers = {
   --eslint = {},
   gopls = {},
   jdtls = {},
+  texlab = {},
+  digestif = {},
   --
   -- Some languages (like typescript) have entire language plugins that can be useful:
   --    https://github.com/pmizio/typescript-tools.nvim
@@ -142,6 +144,15 @@ local on_attach = function(event)
   --  Most Language Servers support renaming across files, etc.
   map('<leader>rn', vim.lsp.buf.rename,
     '[R]e[n]ame')
+
+  map('<space>rn',
+    function()
+      local new_name = vim.fn.expand('<cword>')
+      vim.cmd('undo!')
+      vim.lsp.buf.rename(new_name)
+    end,
+    'testing: first edit the variable name, then press this to rename'
+  )
 
   -- Opens a popup that displays documentation about the
   -- word under your cursor
@@ -343,6 +354,7 @@ require('mason-lspconfig').setup({
 })
 
 require('plugins.blink')
+require('plugins.lsp_fish')
 
 local _, lsplens = pcall(require, 'lsp-lens')
 if lsplens then

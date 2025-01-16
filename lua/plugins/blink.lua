@@ -5,6 +5,16 @@ end
 -- fallbacks are needet so blink does not eat up keys like "tab" etc
 require('blink.cmp').setup({
   keymap = {
+    ['<A-1>'] = { function(cmp) cmp.accept({ index = 1 }) end },
+    ['<A-2>'] = { function(cmp) cmp.accept({ index = 2 }) end },
+    ['<A-3>'] = { function(cmp) cmp.accept({ index = 3 }) end },
+    ['<A-4>'] = { function(cmp) cmp.accept({ index = 4 }) end },
+    ['<A-5>'] = { function(cmp) cmp.accept({ index = 5 }) end },
+    ['<A-6>'] = { function(cmp) cmp.accept({ index = 6 }) end },
+    ['<A-7>'] = { function(cmp) cmp.accept({ index = 7 }) end },
+    ['<A-8>'] = { function(cmp) cmp.accept({ index = 8 }) end },
+    ['<A-9>'] = { function(cmp) cmp.accept({ index = 9 }) end },
+
     ['<Tab>'] = { 'select_and_accept', 'fallback' },
     -- ['<Tab>'] = 'accept',
 
@@ -12,33 +22,24 @@ require('blink.cmp').setup({
 
     ['<C-p>'] = { 'select_prev', 'fallback' },
     ['<C-n>'] = { 'select_next', 'fallback' },
+    ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+    ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
   },
-  trigger = {
-    signature_help = {
-      enabled = true,
-    }
+  signature = {
+    enabled = true,
   },
-  --sources = {
-  --  --completion = {
-  --  --  enabled_providers = {
-  --  --    'lsp',
-  --  --    'path',
-  --  --    'snippets',
-  --  --    'buffer',
-  --  --    --'cmdline',
-  --  --  },
-  --  --},
-  --  providers = {
-  --    --cmdline = {
-  --    --  -- IMPORTANT: use the same name as you would for nvim-cmp
-  --    --  name = 'cmdline',
-  --    --  module = 'blink.compat.source',
 
-  --    --  -- all blink.cmp source config options work as normal:
-  --    --  score_offset = -3,
+  completion = {
+    accept = { auto_brackets = { enabled = false }, },
+    documentation = { auto_show = true, auto_show_delay_ms = 500 },
+    ghost_text = { enabled = true },
+  },
 
-  --    --  opts = {}
-  --    --}
-  --  }
-  --}
+  sources = {
+    default = { "lsp", "path", "snippets", "buffer" },
+
+    -- Disable cmdline completions
+    cmdline = {},
+  },
+
 })
